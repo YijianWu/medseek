@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medseek"
+version = "0.1.0"
+description = "Dense retrieval code for high-risk recognition from clinical records."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+dependencies = [
+  "faiss-cpu>=1.7",
+  "numpy>=1.26",
+  "pyyaml>=6",
+  "torch>=2.1",
+  "transformers>=4.36,<6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+medseek-demo = "medseek.demo:main"
+medseek-evaluate = "medseek.evaluate:main"
+medseek-train = "run_train:main"
+medseek-prepare = "prepare_data:main"
+
+[tool.setuptools]
+py-modules = ["prepare_data", "run_train", "run_retrieval", "run_evaluate"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["medseek*"]
+
+[tool.setuptools.data-files]
+"share/medseek/configs" = ["configs/*.yaml"]
+"share/medseek/data" = ["data/*.csv"]
+"share/medseek/prompts" = ["prompts/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["model: tests that download and run a Hugging Face model"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+

@@ -1,0 +1,55 @@
+# Primary MedSeek recipe distilled from the internal experiment configuration.
+model:
+  model_name_or_path: intfloat/multilingual-e5-large
+  max_length: 512
+  temperature: 0.2
+  risk_loss_mode: supcon
+  risk_loss_weight: 1.0
+
+training:
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  batch_size: 64
+  eval_batch_size: 64
+  num_workers: 8
+  max_epochs: 3
+  risk_positive_ratio: 0.1
+  risk_positive_min_count: 2
+  gradient_clip_norm: 1.0
+  seed: 42
+  device: auto
+
+# Requires diagnosis_teacher_row_id in the data and the governed prototype matrix.
+# Set enabled: true and supply prototype_path to activate.
+diagnosis_aux:
+  enabled: false
+  mode: prototype_soft
+  loss_weight: 0.1
+  temperature: 0.2
+  teacher_temperature: 0.1
+  semantic_mix_alpha: 0.2
+  warmup_epochs: 1
+  prototype_path: null
+
+# Requires secondary_endpoint in the data.
+# Set enabled: true when secondary_endpoint labels are present in your dataset.
+secondary_endpoint_aux:
+  enabled: false
+  cls_loss_weight: 0.2
+  pos_weight: null
+  margin_enabled: false
+  margin_weight: 0.01
+  margin_top_k: 20
+  dropout: 0.1
+
+data:
+  format: jsonl
+  label_field: label_high_risk
+  query_field: query_text
+  document_field: retrieval_text
+  allow_test_as_validation: false
+
+evaluation:
+  top_ks: [5, 10, 20]
+  score_top_k: 20
+  vector_backend: faiss-cpu

@@ -1,0 +1,31 @@
+.env
+.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+.idea/
+.vscode/
+.DS_Store
+
+# Private clinical data and generated artifacts
+/data/
+/outputs/
+/results/
+/runs/
+/checkpoints/
+*.npy
+*.parquet
+*.xlsx
+*.faiss
+*.ann
+
+# Keep only the committed sample data file
+!/data/
+/data/*
+!/data/data.csv
+

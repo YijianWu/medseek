@@ -1,0 +1,33 @@
+model:
+  model_name_or_path: intfloat/multilingual-e5-large
+  max_length: 128
+  temperature: 0.2
+  risk_loss_mode: supcon
+  risk_loss_weight: 1.0
+training:
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  batch_size: 8
+  eval_batch_size: 8
+  num_workers: 0
+  max_epochs: 1
+  risk_positive_ratio: 0.5
+  risk_positive_min_count: 2
+  gradient_clip_norm: 1.0
+  seed: 42
+  device: auto
+diagnosis_aux:
+  enabled: false
+  loss_weight: 0.0
+secondary_endpoint_aux:
+  enabled: false
+  cls_loss_weight: 0.0
+  margin_enabled: false
+  margin_weight: 0.0
+data:
+  format: csv
+  allow_test_as_validation: true
+evaluation:
+  top_ks: [1, 5, 10]
+  score_top_k: 4
+  vector_backend: faiss-cpu

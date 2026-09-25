@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the MedSeek article and this repository."
+title: "MedSeek"
+type: software
+version: 0.1.0
+authors:
+  - name: "MedSeek authors"
+license: Apache-2.0
+
